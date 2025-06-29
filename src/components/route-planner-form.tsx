@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Bot, Map, Route, Clock, Milestone } from 'lucide-react';
+import { Bot, Map, Route, Clock, Milestone, MapPin } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTranslation } from '@/hooks/use-translation';
 
@@ -32,6 +32,7 @@ export function RoutePlannerForm() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SmartRoutePlanningOutput | null>(null);
   const [isLocating, setIsLocating] = useState(true);
+  const [routeQuery, setRouteQuery] = useState<{ startLocation: string; destination: string; } | null>(null);
   const { toast } = useToast();
   const { t } = useTranslation();
 
@@ -81,6 +82,7 @@ export function RoutePlannerForm() {
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     setResult(null);
+    setRouteQuery(null);
     try {
       const preferences = (data.preferences as ('fastest' | 'most scenic' | 'avoid highways')[]) || [];
       const response = await smartRoutePlanning({
@@ -88,6 +90,7 @@ export function RoutePlannerForm() {
         preferences,
       });
       setResult(response);
+      setRouteQuery({ startLocation: data.startLocation, destination: data.destination });
     } catch (error) {
       console.error('Error planning route:', error);
       toast({
@@ -105,6 +108,18 @@ export function RoutePlannerForm() {
     { id: 'most scenic', label: t('Rute Paling Indah') },
     { id: 'avoid highways', label: t('Hindari Jalan Raya') },
   ];
+  
+  const destinationDetails = useMemo(() => {
+    if (!routeQuery) return null;
+    return destinations.find(d => d.name === routeQuery.destination);
+  }, [routeQuery]);
+
+  const mapsUrl = useMemo(() => {
+    if (!routeQuery || !destinationDetails) return '#';
+    const origin = encodeURIComponent(routeQuery.startLocation);
+    const dest = encodeURIComponent(destinationDetails.address);
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=driving`;
+  }, [routeQuery, destinationDetails]);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -222,14 +237,14 @@ export function RoutePlannerForm() {
         </Card>
       )}
 
-      {result && (
+      {result && routeQuery && (
         <Card className="mt-8 animate-in fade-in-50">
           <CardHeader>
             <CardTitle className="font-headline flex items-center gap-2">
               <Map className="w-6 h-6 text-primary" /> {t('Rute Direkomendasikan')}
             </CardTitle>
             <CardDescription>
-              {t('Rute dari')} {form.getValues('startLocation')} {t('ke')} {form.getValues('destination')}
+              {t('Rute dari')} {routeQuery.startLocation} {t('ke')} {routeQuery.destination}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -252,6 +267,14 @@ export function RoutePlannerForm() {
               <p className="text-sm text-muted-foreground">{result.routeSummary}</p>
             </div>
           </CardContent>
+           <CardFooter>
+            <Button asChild variant="outline" className="w-full">
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                <MapPin className="w-4 h-4 mr-2" />
+                {t('Buka di Google Maps')}
+              </a>
+            </Button>
+          </CardFooter>
         </Card>
       )}
     </div>
