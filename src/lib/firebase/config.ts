@@ -13,17 +13,21 @@ const firebaseConfig = {
 let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 
-// Only initialize Firebase if all required keys are provided
+// This check ensures we only try to initialize Firebase when all required keys are present.
+// It's important for both server-side and client-side rendering.
 if (
   firebaseConfig.apiKey &&
   firebaseConfig.authDomain &&
   firebaseConfig.projectId
 ) {
-  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApp();
+  }
   auth = getAuth(app);
 } else {
-  // In a client-side component, this will log to the browser console.
-  // This is helpful for developers to know why authentication isn't working.
+  // Only log this warning on the client-side to avoid server log spam.
   if (typeof window !== 'undefined') {
     console.warn(
       'Firebase configuration is missing or incomplete. Authentication and other Firebase services will be disabled. Please check your .env file.'
