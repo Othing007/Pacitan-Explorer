@@ -3,6 +3,7 @@
 import { useFavorites } from '@/hooks/use-favorites';
 import { Button } from '@/components/ui/button';
 import { Heart } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface FavoriteToggleButtonProps {
   destinationId: string;
@@ -10,6 +11,7 @@ interface FavoriteToggleButtonProps {
 
 export function FavoriteToggleButton({ destinationId }: FavoriteToggleButtonProps) {
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { t } = useTranslation();
   const favorite = isFavorite(destinationId);
 
   return (
@@ -20,7 +22,7 @@ export function FavoriteToggleButton({ destinationId }: FavoriteToggleButtonProp
         e.preventDefault();
         toggleFavorite(destinationId);
       }}
-      aria-label={favorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}
+      aria-label={favorite ? t('Hapus dari favorit') : t('Tambah ke favorit')}
       className="text-muted-foreground hover:text-destructive"
     >
       <Heart className={`w-5 h-5 transition-all ${favorite ? 'fill-destructive text-destructive' : ''}`} />

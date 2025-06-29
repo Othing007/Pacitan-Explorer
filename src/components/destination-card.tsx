@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,12 +7,14 @@ import { Badge } from '@/components/ui/badge';
 import type { Destination } from '@/lib/types';
 import { FavoriteToggleButton } from './favorite-toggle-button';
 import { Star } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 interface DestinationCardProps {
   destination: Destination;
 }
 
 export function DestinationCard({ destination }: DestinationCardProps) {
+  const { t } = useTranslation();
   return (
     <Card className="flex flex-col overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
       <CardHeader className="p-0 relative">
@@ -28,7 +32,7 @@ export function DestinationCard({ destination }: DestinationCardProps) {
         </Link>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
-        <Badge variant="secondary" className="mb-2">{destination.category}</Badge>
+        <Badge variant="secondary" className="mb-2">{t(destination.category)}</Badge>
         <Link href={`/destinations/${destination.id}`}>
           <CardTitle className="font-headline text-xl leading-tight hover:text-primary transition-colors">
             {destination.name}
@@ -42,7 +46,7 @@ export function DestinationCard({ destination }: DestinationCardProps) {
         <div className="flex items-center gap-1">
           <Star className="w-4 h-4 text-primary fill-primary" />
           <span className="text-sm font-bold">{destination.rating}</span>
-          <span className="text-xs text-muted-foreground">({destination.reviews.length} ulasan)</span>
+          <span className="text-xs text-muted-foreground">({destination.reviews.length} {t('ulasan')})</span>
         </div>
         <FavoriteToggleButton destinationId={destination.id} />
       </CardFooter>

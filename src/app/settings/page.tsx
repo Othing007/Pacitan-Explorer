@@ -9,41 +9,42 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function SettingsPage() {
+  const { t, language, setLanguage } = useTranslation();
   const [recommendations, setRecommendations] = useState(true);
   const [events, setEvents] = useState(false);
   const [mapMode, setMapMode] = useState('street');
-  const [language, setLanguage] = useState('id');
   const { toast } = useToast();
 
   const handleSaveChanges = () => {
     // In a real app, you would save these settings to a persistent store
     // like localStorage or a backend database.
     toast({
-      title: "Pengaturan Disimpan",
-      description: "Preferensi Anda telah berhasil diperbarui.",
+      title: t("Pengaturan Disimpan"),
+      description: t("Preferensi Anda telah berhasil diperbarui."),
     });
   };
 
   return (
     <div className="flex flex-col h-full">
-      <AppHeader title="Pengaturan" />
+      <AppHeader title={t("Pengaturan")} />
       <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
         <div className="max-w-2xl mx-auto space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Notifikasi</CardTitle>
+              <CardTitle className="font-headline">{t('Notifikasi')}</CardTitle>
               <CardDescription>
-                Atur notifikasi yang ingin Anda terima dari aplikasi.
+                {t('Notifikasi_desc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
                 <Label htmlFor="recommendations" className="flex flex-col space-y-1">
-                  <span>Rekomendasi Destinasi</span>
+                  <span>{t('Rekomendasi Destinasi')}</span>
                   <span className="font-normal leading-snug text-muted-foreground">
-                    Terima notifikasi tentang tempat wisata baru atau yang sedang populer.
+                    {t('Rekomendasi Destinasi_desc')}
                   </span>
                 </Label>
                 <Switch 
@@ -54,9 +55,9 @@ export default function SettingsPage() {
               </div>
               <div className="flex items-center justify-between space-x-2">
                 <Label htmlFor="events" className="flex flex-col space-y-1">
-                  <span>Acara Wisata</span>
+                  <span>{t('Acara Wisata')}</span>
                    <span className="font-normal leading-snug text-muted-foreground">
-                    Dapatkan info tentang festival atau acara khusus di Pacitan.
+                    {t('Acara Wisata_desc')}
                   </span>
                 </Label>
                 <Switch 
@@ -70,9 +71,9 @@ export default function SettingsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Preferensi Peta</CardTitle>
+              <CardTitle className="font-headline">{t('Preferensi Peta')}</CardTitle>
               <CardDescription>
-                Pilih tampilan default untuk peta di aplikasi.
+                {t('Preferensi Peta_desc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -86,15 +87,15 @@ export default function SettingsPage() {
                 />
               </div>
                <div className="grid w-full items-center gap-1.5">
-                  <Label htmlFor="map-mode">Mode Tampilan Peta</Label>
+                  <Label htmlFor="map-mode">{t('Mode Tampilan Peta')}</Label>
                    <Select value={mapMode} onValueChange={setMapMode}>
                       <SelectTrigger id="map-mode">
-                        <SelectValue placeholder="Pilih mode" />
+                        <SelectValue placeholder={t('Pilih mode')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="street">Jalan</SelectItem>
-                        <SelectItem value="satellite">Satelit</SelectItem>
-                        <SelectItem value="hybrid">Hybrid</SelectItem>
+                        <SelectItem value="street">{t('Jalan')}</SelectItem>
+                        <SelectItem value="satellite">{t('Satelit')}</SelectItem>
+                        <SelectItem value="hybrid">{t('Hybrid')}</SelectItem>
                       </SelectContent>
                     </Select>
                 </div>
@@ -103,28 +104,28 @@ export default function SettingsPage() {
           
            <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Bahasa</CardTitle>
+              <CardTitle className="font-headline">{t('Bahasa')}</CardTitle>
               <CardDescription>
-                Pilih bahasa yang digunakan dalam aplikasi.
+                {t('Bahasa_desc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="language">Bahasa Aplikasi</Label>
+                  <Label htmlFor="language">{t('Bahasa Aplikasi')}</Label>
                    <Select value={language} onValueChange={setLanguage}>
                       <SelectTrigger id="language">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="id">Bahasa Indonesia</SelectItem>
-                        <SelectItem value="en" disabled>English (Coming Soon)</SelectItem>
+                        <SelectItem value="id">{t('Bahasa Indonesia')}</SelectItem>
+                        <SelectItem value="en">{t('English')}</SelectItem>
                       </SelectContent>
                     </Select>
                 </div>
             </CardContent>
           </Card>
           <div className="flex justify-end">
-            <Button onClick={handleSaveChanges}>Simpan Perubahan</Button>
+            <Button onClick={handleSaveChanges}>{t('Simpan Perubahan')}</Button>
           </div>
         </div>
       </div>

@@ -1,8 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin } from 'lucide-react';
+import { useTranslation } from '@/hooks/use-translation';
 
 export function MapPlaceholder() {
+  const { t } = useTranslation();
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
@@ -18,10 +22,10 @@ export function MapPlaceholder() {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40">
             <MapPin className="h-12 w-12 text-white/80" />
             <p className="mt-4 text-lg font-semibold text-white">
-              Peta Interaktif Segera Hadir
+              {t('Peta Interaktif Segera Hadir')}
             </p>
             <p className="text-sm text-white/80">
-              Jelajahi semua destinasi wisata Pacitan dengan mudah.
+              {t('Peta Interaktif_desc')}
             </p>
           </div>
         </div>

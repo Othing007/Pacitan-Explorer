@@ -1,10 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { AppHeader } from '@/components/app-header';
 import { destinations } from '@/lib/data';
 import { Card, CardContent } from '@/components/ui/card';
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function GalleryPage() {
+  const { t } = useTranslation();
   const allImages = destinations.flatMap(dest => 
     dest.images.map(image => ({
       src: image,
@@ -16,7 +20,7 @@ export default function GalleryPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <AppHeader title="Galeri Foto" />
+      <AppHeader title={t('Galeri Foto')} />
       <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
           {allImages.map((image, index) => (

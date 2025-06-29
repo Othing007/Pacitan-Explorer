@@ -23,21 +23,23 @@ import {
   Info,
   Github,
 } from 'lucide-react';
-
-const menuItems = [
-  { href: '/', label: 'Beranda', icon: Map },
-  { href: '/route-planner', label: 'Perencana Rute', icon: Bot },
-  { href: '/favorites', label: 'Favorit', icon: Heart },
-  { href: '/gallery', label: 'Galeri', icon: ImageIcon },
-];
-
-const secondaryMenuItems = [
-    { href: '/settings', label: 'Pengaturan', icon: Cog },
-    { href: '/about', label: 'Tentang', icon: Info },
-]
+import { useTranslation } from '@/hooks/use-translation';
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
+
+  const menuItems = [
+    { href: '/', label: t('Beranda'), icon: Map },
+    { href: '/route-planner', label: t('Perencana Rute'), icon: Bot },
+    { href: '/favorites', label: t('Favorit'), icon: Heart },
+    { href: '/gallery', label: t('Galeri'), icon: ImageIcon },
+  ];
+  
+  const secondaryMenuItems = [
+      { href: '/settings', label: t('Pengaturan'), icon: Cog },
+      { href: '/about', label: t('Tentang'), icon: Info },
+  ]
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
@@ -62,7 +64,7 @@ export function AppSidebar() {
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
+               <SidebarMenuButton
                 asChild
                 isActive={isActive(item.href)}
                 tooltip={item.label}
@@ -100,9 +102,9 @@ export function AppSidebar() {
         <SidebarMenu>
             <SidebarMenuItem>
                 <a href="https://github.com/firebase/firebase-studio" target="_blank" rel="noopener noreferrer">
-                    <SidebarMenuButton tooltip="GitHub">
+                    <SidebarMenuButton tooltip={t('Source Code')}>
                         <Github />
-                        <span>Source Code</span>
+                        <span>{t('Source Code')}</span>
                     </SidebarMenuButton>
                 </a>
             </SidebarMenuItem>

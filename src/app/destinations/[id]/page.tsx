@@ -1,3 +1,5 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { destinations } from '@/lib/data';
@@ -7,14 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Star, MapPin, Clock, Ticket, CheckCircle, MessageSquare } from 'lucide-react';
 import { FavoriteToggleButton } from '@/components/favorite-toggle-button';
-
-export async function generateStaticParams() {
-  return destinations.map((destination) => ({
-    id: destination.id,
-  }));
-}
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function DestinationDetailPage({ params }: { params: { id: string } }) {
+  const { t } = useTranslation();
   const destination = destinations.find((d) => d.id === params.id);
 
   if (!destination) {
@@ -48,11 +46,11 @@ export default function DestinationDetailPage({ params }: { params: { id: string
             <CardHeader>
               <CardTitle className="font-headline text-3xl">{destination.name}</CardTitle>
               <div className="flex items-center gap-4 text-muted-foreground pt-2">
-                <Badge variant="secondary">{destination.category}</Badge>
+                <Badge variant="secondary">{t(destination.category)}</Badge>
                 <div className="flex items-center gap-1">
                   <Star className="w-5 h-5 text-primary fill-primary" />
                   <span className="font-bold text-foreground">{destination.rating}</span>
-                  <span>({destination.reviews.length} ulasan)</span>
+                  <span>({destination.reviews.length} {t('ulasan')})</span>
                 </div>
               </div>
             </CardHeader>
@@ -64,27 +62,27 @@ export default function DestinationDetailPage({ params }: { params: { id: string
           <div className="grid md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
-                <CardTitle className="font-headline text-2xl">Informasi Detail</CardTitle>
+                <CardTitle className="font-headline text-2xl">{t('Informasi Detail')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-sm">
                 <div className="flex items-start gap-4">
                   <MapPin className="w-5 h-5 mt-1 text-primary" />
                   <div>
-                    <h4 className="font-semibold">Alamat</h4>
+                    <h4 className="font-semibold">{t('Alamat')}</h4>
                     <p className="text-muted-foreground">{destination.address}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Clock className="w-5 h-5 mt-1 text-primary" />
                   <div>
-                    <h4 className="font-semibold">Jam Operasional</h4>
+                    <h4 className="font-semibold">{t('Jam Operasional')}</h4>
                     <p className="text-muted-foreground">{destination.operatingHours}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Ticket className="w-5 h-5 mt-1 text-primary" />
                   <div>
-                    <h4 className="font-semibold">Biaya Tiket</h4>
+                    <h4 className="font-semibold">{t('Biaya Tiket')}</h4>
                     <p className="text-muted-foreground">{destination.ticketPrice}</p>
                   </div>
                 </div>
@@ -93,7 +91,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
 
             <Card>
               <CardHeader>
-                <CardTitle className="font-headline text-2xl">Fasilitas</CardTitle>
+                <CardTitle className="font-headline text-2xl">{t('Fasilitas')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2 text-sm">
@@ -110,7 +108,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
           
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline text-2xl">Ulasan Pengguna</CardTitle>
+              <CardTitle className="font-headline text-2xl">{t('Ulasan Pengguna')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {destination.reviews.length > 0 ? (
@@ -135,7 +133,7 @@ export default function DestinationDetailPage({ params }: { params: { id: string
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
                   <MessageSquare className="w-12 h-12 mx-auto mb-2" />
-                  <p>Belum ada ulasan untuk destinasi ini.</p>
+                  <p>{t('Belum ada ulasan untuk destinasi ini.')}</p>
                 </div>
               )}
             </CardContent>

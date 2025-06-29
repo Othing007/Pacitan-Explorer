@@ -17,6 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useToast } from '@/hooks/use-toast';
 import { Bot, Map, Route, Clock, Milestone } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useTranslation } from '@/hooks/use-translation';
 
 const formSchema = z.object({
   startLocation: z.string().min(1, 'Lokasi awal harus diisi'),
@@ -31,14 +32,15 @@ export function RoutePlannerForm() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SmartRoutePlanningOutput | null>(null);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      startLocation: 'Lokasi saat ini',
+      startLocation: t('Lokasi saat ini'),
       destination: '',
       preferences: [],
-      realTimeConditions: 'Lalu lintas normal',
+      realTimeConditions: t('Lalu lintas normal'),
     },
   });
 
@@ -56,8 +58,8 @@ export function RoutePlannerForm() {
       console.error('Error planning route:', error);
       toast({
         variant: 'destructive',
-        title: 'Gagal Merencanakan Rute',
-        description: 'Terjadi kesalahan saat menghubungi AI. Silakan coba lagi.',
+        title: t('Gagal Merencanakan Rute'),
+        description: t('Gagal Merencanakan Rute_desc'),
       });
     } finally {
       setLoading(false);
@@ -65,9 +67,9 @@ export function RoutePlannerForm() {
   };
 
   const preferencesItems = [
-    { id: 'fastest', label: 'Rute Tercepat' },
-    { id: 'most scenic', label: 'Rute Paling Indah' },
-    { id: 'avoid highways', label: 'Hindari Jalan Raya' },
+    { id: 'fastest', label: t('Rute Tercepat') },
+    { id: 'most scenic', label: t('Rute Paling Indah') },
+    { id: 'avoid highways', label: t('Hindari Jalan Raya') },
   ];
 
   return (
@@ -77,8 +79,8 @@ export function RoutePlannerForm() {
           <div className="flex items-center gap-3">
             <Bot className="w-8 h-8 text-primary" />
             <div>
-              <CardTitle className="font-headline text-2xl">Rekomendasi Rute AI</CardTitle>
-              <CardDescription>Dapatkan rute terbaik berdasarkan preferensi Anda.</CardDescription>
+              <CardTitle className="font-headline text-2xl">{t('Rekomendasi Rute AI')}</CardTitle>
+              <CardDescription>{t('Rekomendasi Rute AI_desc')}</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -90,9 +92,9 @@ export function RoutePlannerForm() {
                 name="startLocation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Lokasi Awal</FormLabel>
+                    <FormLabel>{t('Lokasi Awal')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Contoh: Alun-alun Pacitan" {...field} />
+                      <Input placeholder={t('Contoh: Alun-alun Pacitan')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,11 +105,11 @@ export function RoutePlannerForm() {
                 name="destination"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tujuan</FormLabel>
+                    <FormLabel>{t('Tujuan')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Pilih destinasi wisata" />
+                          <SelectValue placeholder={t('Pilih destinasi wisata')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -127,7 +129,7 @@ export function RoutePlannerForm() {
                 name="preferences"
                 render={() => (
                   <FormItem>
-                    <FormLabel>Preferensi Rute</FormLabel>
+                    <FormLabel>{t('Preferensi Rute')}</FormLabel>
                     <div className="space-y-2">
                       {preferencesItems.map((item) => (
                         <FormField
@@ -161,7 +163,7 @@ export function RoutePlannerForm() {
             </CardContent>
             <CardFooter>
               <Button type="submit" disabled={loading} className="w-full">
-                {loading ? 'Mencari rute...' : 'Rencanakan Rute'}
+                {loading ? t('Mencari rute...') : t('Rencanakan Rute')}
               </Button>
             </CardFooter>
           </form>
@@ -186,10 +188,10 @@ export function RoutePlannerForm() {
         <Card className="mt-8 animate-in fade-in-50">
           <CardHeader>
             <CardTitle className="font-headline flex items-center gap-2">
-              <Map className="w-6 h-6 text-primary" /> Rute Direkomendasikan
+              <Map className="w-6 h-6 text-primary" /> {t('Rute Direkomendasikan')}
             </CardTitle>
             <CardDescription>
-              Rute dari {form.getValues('startLocation')} ke {form.getValues('destination')}
+              {t('Rute dari')} {form.getValues('startLocation')} {t('ke')} {form.getValues('destination')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -204,11 +206,11 @@ export function RoutePlannerForm() {
                 </div>
             </div>
             <div>
-              <h4 className="font-bold mb-2 flex items-center gap-2"><Route className="w-5 h-5" /> Deskripsi Rute</h4>
+              <h4 className="font-bold mb-2 flex items-center gap-2"><Route className="w-5 h-5" /> {t('Deskripsi Rute')}</h4>
               <p className="text-sm text-muted-foreground">{result.routeDescription}</p>
             </div>
             <div>
-              <h4 className="font-bold mb-2 flex items-center gap-2"><Milestone className="w-5 h-5" /> Ringkasan Perjalanan</h4>
+              <h4 className="font-bold mb-2 flex items-center gap-2"><Milestone className="w-5 h-5" /> {t('Ringkasan Perjalanan')}</h4>
               <p className="text-sm text-muted-foreground">{result.routeSummary}</p>
             </div>
           </CardContent>
