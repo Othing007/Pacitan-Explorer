@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Bot, Map, Route, Clock, Milestone, MapPin } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTranslation } from '@/hooks/use-translation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const formSchema = z.object({
   startLocation: z.string().min(1, 'Lokasi awal harus diisi'),
@@ -33,6 +34,7 @@ export function RoutePlannerForm() {
   const [result, setResult] = useState<SmartRoutePlanningOutput | null>(null);
   const [isLocating, setIsLocating] = useState(true);
   const [routeQuery, setRouteQuery] = useState<{ startLocation: string; destination: string; } | null>(null);
+  const [sortOrder, setSortOrder] = useState<'alphabetical' | 'category' | 'rating'>('alphabetical');
   const { toast } = useToast();
   const { t } = useTranslation();
 
@@ -110,8 +112,22 @@ export function RoutePlannerForm() {
   ];
   
   const sortedDestinations = useMemo(() => {
-    return [...destinations].sort((a, b) => a.name.localeCompare(b.name, 'id'));
-  }, []);
+    const destinationsCopy = [...destinations];
+    switch (sortOrder) {
+      case 'category':
+        return destinationsCopy.sort((a, b) => {
+          if (a.category !== b.category) {
+            return a.category.localeCompare(b.category, 'id');
+          }
+          return a.name.localeCompare(b.name, 'id');
+        });
+      case 'rating':
+        return destinationsCopy.sort((a, b) => b.rating - a.rating);
+      case 'alphabetical':
+      default:
+        return destinationsCopy.sort((a, b) => a.name.localeCompare(b.name, 'id'));
+    }
+  }, [sortOrder]);
 
   const destinationDetails = useMemo(() => {
     if (!routeQuery) return null;
@@ -157,6 +173,27 @@ export function RoutePlannerForm() {
                   </FormItem>
                 )}
               />
+              <FormItem>
+                <FormLabel>{t('Urutkan Tujuan')}</FormLabel>
+                <RadioGroup
+                  value={sortOrder}
+                  onValueChange={(value: 'alphabetical' | 'category' | 'rating') => setSortOrder(value)}
+                  className="flex items-center space-x-4 pt-1"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="alphabetical" id="r-alpha" />
+                    <Label htmlFor="r-alpha" className="font-normal">{t('Alfabetis')}</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="category" id="r-cat" />
+                    <Label htmlFor="r-cat" className="font-normal">{t('Kategori')}</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="rating" id="r-rate" />
+                    <Label htmlFor="r-rate" className="font-normal">{t('Rating')}</Label>
+                  </div>
+                </RadioGroup>
+              </FormItem>
               <FormField
                 control={form.control}
                 name="destination"
@@ -172,7 +209,7 @@ export function RoutePlannerForm() {
                       <SelectContent>
                         {sortedDestinations.map((dest) => (
                           <SelectItem key={dest.id} value={dest.name}>
-                            {dest.name}
+                            {dest.name}{sortOrder === 'rating' && ` (${dest.rating}★)`}
                           </SelectItem>
                         ))}
                       </SelectContent>
