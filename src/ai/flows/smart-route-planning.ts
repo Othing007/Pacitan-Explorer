@@ -117,7 +117,7 @@ const prompt = ai.definePrompt({
 3.  **Generate Response in Bahasa Indonesia**:
     *   **estimatedTime**: Use the exact \`duration\` value from the tool.
     *   **estimatedDistance**: Use the exact \`distance\` value from the tool.
-    *   **routeSummary**: Use the \`summary\` from the tool output. This should be a brief overview of the main roads to take (e.g., "Lewat Jl. Lintas Selatan").
+    *   **routeSummary**: Create a brief, user-friendly, one-sentence summary of the main road for the route in Bahasa Indonesia, based on the \`summary\` from the tool. For example, if the tool's summary is "Jl. Lintas Selatan", you should write "Rute utama Anda akan melewati Jl. Lintas Selatan.".
     *   **routeDescription**: Create a user-friendly, narrative description of the route in Bahasa Indonesia. Start from the \`startLocation\` and guide them to the \`destination\`. Mention the estimated travel time and distance. If the user has preferences like 'Rute Paling Indah' (most scenic), add a sentence acknowledging that the route chosen is efficient but they should enjoy the views along the way. Factor in any \`realTimeConditions\` provided by the user in your narrative (e.g., "Mengingat lalu lintas normal, perjalanan akan terasa lancar.").
 
 User's request:
