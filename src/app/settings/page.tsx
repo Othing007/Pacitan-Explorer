@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { AppHeader } from '@/components/app-header';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -75,7 +76,16 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-               <div className="grid w-full max-w-sm items-center gap-1.5">
+               <div className="relative aspect-video w-full overflow-hidden rounded-md">
+                <Image
+                    src="https://placehold.co/600x400.png"
+                    alt="Peta"
+                    layout="fill"
+                    objectFit="cover"
+                    data-ai-hint="map abstract"
+                />
+              </div>
+               <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="map-mode">Mode Tampilan Peta</Label>
                    <Select value={mapMode} onValueChange={setMapMode}>
                       <SelectTrigger id="map-mode">
@@ -112,10 +122,10 @@ export default function SettingsPage() {
                     </Select>
                 </div>
             </CardContent>
-             <CardFooter>
-                 <Button onClick={handleSaveChanges}>Simpan Perubahan</Button>
-            </CardFooter>
           </Card>
+          <div className="flex justify-end">
+            <Button onClick={handleSaveChanges}>Simpan Perubahan</Button>
+          </div>
         </div>
       </div>
     </div>
