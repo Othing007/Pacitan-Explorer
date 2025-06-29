@@ -109,6 +109,10 @@ export function RoutePlannerForm() {
     { id: 'avoid highways', label: t('Hindari Jalan Raya') },
   ];
   
+  const sortedDestinations = useMemo(() => {
+    return [...destinations].sort((a, b) => a.name.localeCompare(b.name, 'id'));
+  }, []);
+
   const destinationDetails = useMemo(() => {
     if (!routeQuery) return null;
     return destinations.find(d => d.name === routeQuery.destination);
@@ -166,7 +170,7 @@ export function RoutePlannerForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {destinations.map((dest) => (
+                        {sortedDestinations.map((dest) => (
                           <SelectItem key={dest.id} value={dest.name}>
                             {dest.name}
                           </SelectItem>
