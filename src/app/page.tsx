@@ -47,7 +47,7 @@ export default function Home() {
               placeholder={t('Cari tempat wisata...')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-4 pr-4 py-6 text-base"
+              className="pl-4 pr-4 py-6 text-base bg-secondary border-transparent"
             />
           </div>
           <div className="flex flex-wrap gap-2">
