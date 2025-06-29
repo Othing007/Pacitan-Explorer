@@ -21,9 +21,9 @@ import {
   Image as ImageIcon,
   Cog,
   Info,
-  Github,
 } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
+import { UserProfile } from './user-profile';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -101,12 +101,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
             <SidebarMenuItem>
-                <a href="https://github.com/firebase/firebase-studio" target="_blank" rel="noopener noreferrer">
-                    <SidebarMenuButton tooltip={t('Source Code')}>
-                        <Github />
-                        <span>{t('Source Code')}</span>
-                    </SidebarMenuButton>
-                </a>
+              <UserProfile />
             </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

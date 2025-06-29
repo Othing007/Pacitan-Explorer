@@ -4,6 +4,7 @@ import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/app-sidebar';
 import { Toaster } from "@/components/ui/toaster";
 import { TranslationProvider } from '@/components/translation-provider';
+import { AuthProvider } from '@/contexts/auth-context';
 
 export const metadata: Metadata = {
   title: 'Pacitan Explorer',
@@ -24,15 +25,17 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <TranslationProvider>
-          <SidebarProvider>
-            <Sidebar>
-              <AppSidebar />
-            </Sidebar>
-            <SidebarInset>
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
-          <Toaster />
+          <AuthProvider>
+            <SidebarProvider>
+              <Sidebar>
+                <AppSidebar />
+              </Sidebar>
+              <SidebarInset>
+                {children}
+              </SidebarInset>
+            </SidebarProvider>
+            <Toaster />
+          </AuthProvider>
         </TranslationProvider>
       </body>
     </html>

@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/use-translation';
+import { withAuth } from '@/components/with-auth';
 
-export default function SettingsPage() {
+function SettingsPage() {
   const { t, language, setLanguage } = useTranslation();
   const [recommendations, setRecommendations] = useState(true);
   const [events, setEvents] = useState(false);
@@ -132,3 +133,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+export default withAuth(SettingsPage);

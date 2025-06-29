@@ -9,8 +9,9 @@ import { Heart } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
+import { withAuth } from '@/components/with-auth';
 
-export default function FavoritesPage() {
+function FavoritesPage() {
   const { favorites } = useFavorites();
   const { t } = useTranslation();
 
@@ -44,3 +45,5 @@ export default function FavoritesPage() {
     </div>
   );
 }
+
+export default withAuth(FavoritesPage);

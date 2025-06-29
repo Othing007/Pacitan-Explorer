@@ -1,3 +1,4 @@
+
 {
   "Beranda": "Home",
   "Perencana Rute": "Route Planner",
@@ -93,5 +94,29 @@
   "Urutkan Tujuan": "Sort Destinations",
   "Alfabetis": "Alphabetical",
   "Kategori": "Category",
-  "Rating": "Rating"
+  "Rating": "Rating",
+  "Selamat Datang Kembali": "Welcome Back",
+  "Buat Akun Baru": "Create a New Account",
+  "Masuk untuk melanjutkan petualangan Anda.": "Login to continue your adventure.",
+  "Daftar untuk mulai menjelajahi Pacitan.": "Sign up to start exploring Pacitan.",
+  "Email": "Email",
+  "Password": "Password",
+  "Memproses...": "Processing...",
+  "Masuk": "Login",
+  "Daftar": "Sign Up",
+  "Atau lanjutkan dengan": "Or continue with",
+  "Google": "Google",
+  "Belum punya akun? ": "Don't have an account? ",
+  "Sudah punya akun? ": "Already have an account? ",
+  "Daftar di sini": "Sign up here",
+  "Masuk di sini": "Login here",
+  "Login Berhasil": "Login Successful",
+  "Pendaftaran Berhasil": "Sign-up Successful",
+  "Selamat datang di Pacitan Explorer!": "Welcome to Pacitan Explorer!",
+  "Terjadi Kesalahan": "An Error Occurred",
+  "Pengguna": "User",
+  "Keluar": "Logout",
+  "Admin Dashboard": "Admin Dashboard",
+  "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.": "This is the admin dashboard. Only users with admin privileges can see this page.",
+  "Anda dapat mengelola konten aplikasi dari sini.": "You can manage application content from here."
 }

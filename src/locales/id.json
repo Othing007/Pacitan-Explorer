@@ -1,3 +1,4 @@
+
 {
     "Beranda": "Beranda",
     "Perencana Rute": "Perencana Rute",
@@ -93,5 +94,29 @@
     "Urutkan Tujuan": "Urutkan Tujuan",
     "Alfabetis": "Alfabetis",
     "Kategori": "Kategori",
-    "Rating": "Rating"
+    "Rating": "Rating",
+    "Selamat Datang Kembali": "Selamat Datang Kembali",
+    "Buat Akun Baru": "Buat Akun Baru",
+    "Masuk untuk melanjutkan petualangan Anda.": "Masuk untuk melanjutkan petualangan Anda.",
+    "Daftar untuk mulai menjelajahi Pacitan.": "Daftar untuk mulai menjelajahi Pacitan.",
+    "Email": "Email",
+    "Password": "Password",
+    "Memproses...": "Memproses...",
+    "Masuk": "Masuk",
+    "Daftar": "Daftar",
+    "Atau lanjutkan dengan": "Atau lanjutkan dengan",
+    "Google": "Google",
+    "Belum punya akun? ": "Belum punya akun? ",
+    "Sudah punya akun? ": "Sudah punya akun? ",
+    "Daftar di sini": "Daftar di sini",
+    "Masuk di sini": "Masuk di sini",
+    "Login Berhasil": "Login Berhasil",
+    "Pendaftaran Berhasil": "Pendaftaran Berhasil",
+    "Selamat datang di Pacitan Explorer!": "Selamat datang di Pacitan Explorer!",
+    "Terjadi Kesalahan": "Terjadi Kesalahan",
+    "Pengguna": "Pengguna",
+    "Keluar": "Keluar",
+    "Admin Dashboard": "Dasbor Admin",
+    "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.": "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.",
+    "Anda dapat mengelola konten aplikasi dari sini.": "Anda dapat mengelola konten aplikasi dari sini."
 }
