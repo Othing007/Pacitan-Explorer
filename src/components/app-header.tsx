@@ -12,7 +12,7 @@ export function AppHeader({ title, children }: AppHeaderProps) {
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
-      <h1 className="font-headline text-2xl font-semibold tracking-tight md:text-3xl">
+      <h1 className="font-headline text-2xl font-bold tracking-tight md:text-3xl">
         {title}
       </h1>
       <div className="ml-auto flex items-center gap-2">
