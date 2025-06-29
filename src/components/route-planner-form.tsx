@@ -47,17 +47,27 @@ export function RoutePlannerForm() {
   useEffect(() => {
     if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
-          form.setValue('startLocation', `${latitude}, ${longitude}`);
+          try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+            if (!response.ok) {
+              throw new Error('Reverse geocoding failed');
+            }
+            const data = await response.json();
+            const locationName = data.display_name || `${latitude}, ${longitude}`;
+            form.setValue('startLocation', locationName);
+          } catch (error) {
+            console.error('Error fetching location name:', error);
+            form.setValue('startLocation', `${latitude}, ${longitude}`);
+          }
         },
         (error) => {
           console.warn(`Geolocation error: ${error.message}`);
-          // Fallback to the default value is already handled by defaultValues
         }
       );
     }
-  }, [form]);
+  }, [form, t]);
 
 
   const onSubmit = async (data: FormValues) => {
