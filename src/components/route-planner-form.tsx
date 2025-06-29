@@ -31,13 +31,14 @@ type FormValues = z.infer<typeof formSchema>;
 export function RoutePlannerForm() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SmartRoutePlanningOutput | null>(null);
+  const [isLocating, setIsLocating] = useState(true);
   const { toast } = useToast();
   const { t } = useTranslation();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      startLocation: t('Lokasi saat ini'),
+      startLocation: '',
       destination: '',
       preferences: [],
       realTimeConditions: t('Lalu lintas normal'),
@@ -45,7 +46,7 @@ export function RoutePlannerForm() {
   });
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && navigator.geolocation) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
@@ -60,12 +61,19 @@ export function RoutePlannerForm() {
           } catch (error) {
             console.error('Error fetching location name:', error);
             form.setValue('startLocation', `${latitude}, ${longitude}`);
+          } finally {
+            setIsLocating(false);
           }
         },
         (error) => {
           console.warn(`Geolocation error: ${error.message}`);
+          form.setValue('startLocation', t('Lokasi saat ini'));
+          setIsLocating(false);
         }
       );
+    } else {
+      form.setValue('startLocation', t('Lokasi saat ini'));
+      setIsLocating(false);
     }
   }, [form, t]);
 
@@ -120,7 +128,11 @@ export function RoutePlannerForm() {
                   <FormItem>
                     <FormLabel>{t('Lokasi Awal')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={t('Contoh: Alun-alun Pacitan')} {...field} />
+                      {isLocating ? (
+                         <Skeleton className="h-10 w-full" />
+                      ) : (
+                        <Input placeholder={t('Contoh: Alun-alun Pacitan')} {...field} />
+                      )}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
