@@ -118,5 +118,8 @@
     "Keluar": "Keluar",
     "Admin Dashboard": "Dasbor Admin",
     "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.": "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.",
-    "Anda dapat mengelola konten aplikasi dari sini.": "Anda dapat mengelola konten aplikasi dari sini."
+    "Anda dapat mengelola konten aplikasi dari sini.": "Anda dapat mengelola konten aplikasi dari sini.",
+    "Salin UID": "Salin UID",
+    "UID Disalin": "UID Disalin",
+    "UID Anda telah disalin ke clipboard.": "UID Anda telah disalin ke clipboard."
 }

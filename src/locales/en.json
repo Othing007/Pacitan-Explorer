@@ -118,5 +118,8 @@
   "Keluar": "Logout",
   "Admin Dashboard": "Admin Dashboard",
   "Ini adalah dasbor admin. Hanya pengguna dengan hak admin yang dapat melihat halaman ini.": "This is the admin dashboard. Only users with admin privileges can see this page.",
-  "Anda dapat mengelola konten aplikasi dari sini.": "You can manage application content from here."
+  "Anda dapat mengelola konten aplikasi dari sini.": "You can manage application content from here.",
+  "Salin UID": "Copy UID",
+  "UID Disalin": "UID Copied",
+  "UID Anda telah disalin ke clipboard.": "Your UID has been copied to the clipboard."
 }

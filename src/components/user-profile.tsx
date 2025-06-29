@@ -4,12 +4,13 @@ import { useAuth } from '@/contexts/auth-context';
 import { signOutUser } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
-import { LogIn, LogOut, User as UserIcon, Shield } from 'lucide-react';
+import { LogIn, LogOut, User as UserIcon, Shield, KeyRound } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 import { Skeleton } from './ui/skeleton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { useTranslation } from '@/hooks/use-translation';
+import { useToast } from '@/hooks/use-toast';
 
 const ADMIN_UIDS = (process.env.NEXT_PUBLIC_ADMIN_UIDS || '').split(',');
 
@@ -17,12 +18,23 @@ export function UserProfile() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
+  const { toast } = useToast();
 
   const handleLogout = async () => {
     await signOutUser();
     router.push('/auth');
   };
   
+  const handleCopyUid = () => {
+    if (user?.uid) {
+      navigator.clipboard.writeText(user.uid);
+      toast({
+        title: t('UID Disalin'),
+        description: t('UID Anda telah disalin ke clipboard.'),
+      });
+    }
+  };
+
   const isAdmin = user ? ADMIN_UIDS.includes(user.uid) : false;
 
   if (loading) {
@@ -77,6 +89,11 @@ export function UserProfile() {
                     </Link>
                   </DropdownMenuItem>
                 )}
+                <DropdownMenuItem onClick={handleCopyUid}>
+                    <KeyRound className="mr-2 h-4 w-4" />
+                    <span>{t('Salin UID')}</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>{t('Keluar')}</span>
