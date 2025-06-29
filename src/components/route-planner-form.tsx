@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -43,6 +43,22 @@ export function RoutePlannerForm() {
       realTimeConditions: t('Lalu lintas normal'),
     },
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          form.setValue('startLocation', `${latitude}, ${longitude}`);
+        },
+        (error) => {
+          console.warn(`Geolocation error: ${error.message}`);
+          // Fallback to the default value is already handled by defaultValues
+        }
+      );
+    }
+  }, [form]);
+
 
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
