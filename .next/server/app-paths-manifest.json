@@ -1,0 +1,9 @@
+{
+  "/about/page": "app/about/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/favorites/page": "app/favorites/page.js",
+  "/gallery/page": "app/gallery/page.js",
+  "/page": "app/page.js",
+  "/route-planner/page": "app/route-planner/page.js",
+  "/settings/page": "app/settings/page.js"
+}

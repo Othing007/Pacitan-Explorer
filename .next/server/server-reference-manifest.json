@@ -1,0 +1,17 @@
+{
+  "node": {
+    "402313065565ff1d4d47e736aabd8a4e9bcc65b5cb": {
+      "workers": {
+        "app/route-planner/page": {
+          "moduleId": "[project]/.next-internal/server/app/route-planner/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/ai/flows/smart-route-planning.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/route-planner/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "mYQRvlePYJYV0J5QVhb2n7iWgD2ZFrwDNfWYHbC2lEk="
+}
